@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance PLTD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Animasi loading spinner (bisa digunakan untuk hal lain) */
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .animate-spin-fast {
+            animation: spin 0.7s linear infinite;
+        }
+
+        /* Animasi fadeIn untuk modal */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .animate-fade-in-scale {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        /* Animasi fadeOut untuk modal */
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+        }
+        .animate-fade-out-scale {
+            animation: fadeOut 0.3s ease-in forwards;
+        }
+
+        /* Animasi untuk kartu utama (memberikan efek masuk yang lembut) */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-slide-in-up {
+            animation: slideInUp 0.5s ease-out forwards;
+        }
+
+        /* Animasi Gear SVG */
+        .animate-gear-spin {
+            animation: spin 6s linear infinite; /* Animasi putar lebih lambat */
+            transform-origin: center center; /* Pastikan berputar dari tengah */
+        }
+
+        /* Animasi Kedip-kedip Cepat */
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3; /* Sedikit lebih transparan untuk efek yang lebih jelas */
+            }
+        }
+        .animate-pulse-fast {
+            animation: pulse 1s infinite ease-in-out; /* 1 detik per siklus, lebih cepat */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col items-center justify-between p-4 sm:p-6">
+
+    <div class="flex flex-col items-center justify-center w-full max-w-sm mx-auto my-auto">
+        <div id="mainCard" class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg text-center w-full border border-gray-100 animate-slide-in-up">
+            <div class="flex justify-center mb-4">
+                <svg class="h-16 w-16 text-blue-500 animate-gear-spin" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-14h2v2h-2zm0 4h2v6h-2zm0 8h2v2h-2z"/>
+                    <path fill="none" d="M0 0h24v24H0z"/>
+                    <path d="M19.45 10.95l-1.91-1.91c-.45-.45-.45-1.18 0-1.63l1.91-1.91a.5.5 0 00-.35-.85L16.2 4.41a.5.5 0 00-.85.35L14.04 6.67c-.45.45-1.18.45-1.63 0l-1.91-1.91a.5.5 0 00-.85.35L8.79 7.4a.5.5 0 00.35.85L11 10.16c.45.45.45 1.18 0 1.63l-1.91 1.91a.5.5 0 00.35.85l2.6 1.74a.5.5 0 00.85-.35l1.74-2.6c.45-.45 1.18-.45 1.63 0l1.91 1.91a.5.5 0 00.85-.35l-1.74-2.6a.5.5 0 00.35-.85z"/>
+                </svg>
+            </div>
+
+            <h1 class="text-2xl font-extrabold text-gray-800 mb-4 mt-2">Selamat Datang!</h1>
+            <p class="text-base text-gray-600 mb-6">Silahkan Pilih lokasi dan jenis pekerjaan</p>
+            <p class="text-sm text-red-500 mb-6 font-semibold flex items-center justify-center **animate-pulse-fast**">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8.257 3.341A9.954 9.954 0 0010 2a9.954 0 001.743 1.341c.42.342.618.847.533 1.348l-.076.457c-.035.209-.092.417-.17.618L9.5 10.743a1 1 0 01-1.854.195l-2.062-3.712a1 1 0 01-.19-.48l-.05-.297a.885.885 0 01.127-.588 1 1 0 01.353-.455L8.257 3.34zM12 14a2 2 0 100-4 2 2 0 000 4zM10 18a8 8 0 100-16 8 8 0 000 16z" clip-rule="evenodd" />
+                </svg>
+                ⚠️ Wajib login akun Google untuk akses ini
+            </p>
+
+            <div class="mb-5">
+                <label for="siteSelector" class="block text-left text-sm font-medium text-gray-700 mb-1">Pilih Lokasi:</label>
+                <select id="siteSelector" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out">
+                    <option value="">-- Pilih Lokasi --</option>
+                    <option value="siteA">PLTD Pamaron (Bali)</option>
+                    <!-- <option value="siteB">PLTD Tayan (Kalimantan)</option>
+                    <option value="siteC">PLTD Mangole (Maluku)</option> -->
+                </select>
+            </div>
+
+            <div class="mb-6">
+                <label for="jobSelector" class="block text-left text-sm font-medium text-gray-700 mb-1">Jenis Pekerjaan:</label>
+                <select id="jobSelector" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out">
+                    <option value="">-- Pilih Jenis Pekerjaan --</option>
+                    <option value="genset">Checklist Parameter Genset</option>
+                    <option value="kwhflow">Checklist KWH & Flow</option>
+                    <option value="laporan">Lihat Laporan</option>
+                    <option value="photo">Lihat Foto Dokumentasi</option>
+                </select>
+            </div>
+
+            <button onclick="handleSelection()" class="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-200 ease-in-out transform active:scale-98">
+                Lanjutkan
+            </button>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center p-4 z-50 transition-opacity duration-300">
+        <div id="modalContent" class="bg-white p-6 rounded-xl shadow-2xl text-center w-full max-w-xs transform scale-100 opacity-100">
+            <h2 class="text-xl font-bold text-gray-800 mb-3">Konfirmasi Pilihan</h2>
+            <p id="confirmText" class="mb-5 text-gray-700 leading-relaxed"></p>
+            <div class="flex justify-center space-x-4">
+                <button onclick="proceedToLink()" class="flex-1 bg-blue-600 text-white font-medium px-5 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-200 ease-in-out">
+                    Ya, Lanjutkan
+                </button>
+                <button onclick="closeModal()" class="flex-1 bg-gray-200 text-gray-800 font-medium px-5 py-2 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition duration-200 ease-in-out">
+                    Batal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastNotification" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-gray-800 text-white px-5 py-3 rounded-xl shadow-lg z-50 hidden opacity-0 transition-opacity duration-300">
+        <p id="toastMessage" class="text-sm font-medium"></p>
+    </div>
+
+    <footer class="text-center py-4 text-gray-500 text-xs sm:text-sm">
+        &copy; SobatPower 2025. All rights reserved.
+    </footer>
+
+    <script>
+        const links = {
+            genset: {
+                siteA: "https://docs.google.com/forms/d/e/1FAIpQLSd7QPir8-9sHktA_NE1HuWVhOfWau4D-Hic4-TaNNdO6W1tGA/viewform?usp=sharing",
+                // siteB: "https://docs.google.com/forms/d/e/1FAIpQLSfqwZd98RNF-oxxBdqpP-clSDrGNb-gfLBCJGAayq5WD_9eDw/viewform?usp=dialog",
+                // siteC: "https://docs.google.com/forms/d/e/1FAIpQLScjwYIiDcfji8yzD-Um1y40mMeDrDxDtZvf3ytp7JXa5QRBOQ/viewform?usp=dialog"
+            },
+            kwhflow: {
+                siteA: "https://docs.google.com/forms/d/e/1FAIpQLSdxDJX2QxuPvsp4fzNQ3Q7NbBr2CWgHdX4gY-t2KKUV4M5mVQ/viewform?usp=sharing",
+                // siteB: "https://docs.google.com/forms/d/e/1FAIpQLScqYxGGdgmDr_yb2KHCTSBx9OUPOC0WeJR1K1b7LfD07LNkIg/viewform?usp=dialog",
+                // siteC: "https://docs.google.com/forms/d/e/1FAIpQLSewRNLk2aWC7sZ5gGarkjzRNDvsZrk9GqNlT7BG6Y5CmUgEkw/viewform?usp=dialog"
+            },
+            laporan: {
+                siteA: "https://docs.google.com/spreadsheets/d/1xJt4j2Wnvk86uycVe1JnoYS-Xdld3gGXC8yTF7UX9ds/edit?usp=sharing",
+                // siteB: "https://docs.google.com/spreadsheets/d/1gBA69tTkFiKzL5AtBeJy6ZWcpmYKkCXW1B9ijXN0xPU/edit?usp=sharing",
+                // siteC: "https://docs.google.com/spreadsheets/d/15pyM4cNXimEzWF5fw7kdHTN0Jr6pJWxMeIHdbGNlw5o/edit?usp=sharing"
+            },
+            photo: {
+                siteA: "https://drive.google.com/drive/folders/1QVHZPN13GmB_mCrccYxKwuVtgfeX7RH9ZDhY2BWuqn1Evn948XyEseOmIMMHxcB7WvhcJufF?usp=sharing",
+                // siteB: "https://drive.google.com/drive/folders/1UYirL5jYo8o__9aYuXk4m1QnUZYXEHMutboHyuMLv3jz7cTkVMRugNr0NPulgvxjGGDBX6gG?usp=sharing",
+                // siteC: "https://drive.google.com/drive/folders/1wEvTQYLxP4j6JXM_bvweMxU9Hqc5pSvegYbjug6oHnU0aT_6XcTxby6W9q0f9Dp85XyQmQel?usp=sharing"
+            }
+        };
+
+        let selectedURL = '';
+        const confirmModal = document.getElementById("confirmModal");
+        const modalContent = document.getElementById("modalContent");
+        const confirmText = document.getElementById("confirmText");
+        const siteSelector = document.getElementById("siteSelector");
+        const jobSelector = document.getElementById("jobSelector");
+        const toastNotification = document.getElementById("toastNotification");
+        const toastMessage = document.getElementById("toastMessage");
+
+        function showToast(message) {
+            toastMessage.textContent = message;
+            toastNotification.classList.remove("hidden");
+            void toastNotification.offsetWidth;
+            toastNotification.classList.add("opacity-100");
+
+            setTimeout(() => {
+                toastNotification.classList.remove("opacity-100");
+                setTimeout(() => {
+                    toastNotification.classList.add("hidden");
+                }, 300);
+            }, 3000);
+        }
+
+        function handleSelection() {
+            const site = siteSelector.value;
+            const job = jobSelector.value;
+
+            if (!site || !job) {
+                showToast("Pilih lokasi dan jenis pekerjaan terlebih dahulu!");
+                return;
+            }
+
+            const url = links[job]?.[site];
+            if (!url) {
+                showToast("Link untuk pilihan ini tidak ditemukan. Harap hubungi administrator.");
+                return;
+            }
+
+            selectedURL = url;
+
+            const jobLabel = jobSelector.selectedOptions[0].text;
+            const siteLabel = siteSelector.selectedOptions[0].text;
+
+            confirmText.textContent = `Anda akan membuka "${jobLabel}" untuk "${siteLabel}". Lanjutkan?`;
+            confirmModal.classList.remove("hidden");
+            confirmModal.classList.add("flex");
+            modalContent.classList.remove("animate-fade-out-scale");
+            modalContent.classList.add("animate-fade-in-scale");
+        }
+
+        function closeModal() {
+            modalContent.classList.remove("animate-fade-in-scale");
+            modalContent.classList.add("animate-fade-out-scale");
+
+            setTimeout(() => {
+                confirmModal.classList.add("hidden");
+                confirmModal.classList.remove("flex");
+            }, 300);
+        }
+
+        function proceedToLink() {
+            window.open(selectedURL, "_blank");
+            closeModal();
+        }
+    </script>
+</body>
+</html>
